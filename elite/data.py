@@ -129,7 +129,7 @@ class Category(Entity):
 
     @property
     def screenshots(self):
-        _filter = lambda child: isinstance(child, Screenshot)
+        _filter = lambda child: isinstance(child, Screenshot) and child.image().exists()
         return filter(_filter, self.children)
 
     @property
@@ -335,6 +335,9 @@ class Image(object):
         (w, h) = self.size or (1920, 1080)
 
         return 'http://placehold.it/%dx%d' % (w, h)
+
+    def exists(self):
+        return self.path.exists()
 
     def ensure_image(self):
         if not self.path.exists():
