@@ -1,0 +1,55 @@
+<%!
+    title = "Panel"
+%>
+<%inherit file="base.html" />
+
+<a href="/">Home</a>
+
+<%block name="head">
+    <script src="${url_for('static', filename='js/lodash.min.js')}"></script>
+    <script src="${url_for('static', filename='js/panel.js')}"></script>
+</%block>
+
+<div class="ui form segment" id="upload-form">
+    <div class="ui dividing header">Upload screenshot</div>
+    <div class="two fields">
+        <div class="field">
+            <label for="upload-name">Name</label>
+            <input type="text" id="upload-name" placeholder="Name" />
+        </div>
+        <div class="field">
+            <label for="upload-category">Category</label>
+            <select id="upload-category" data-name="categories"></select>
+        </div>
+    </div>
+    <div class="field">
+        <textarea id="upload-description"></textarea>
+    </div>
+    <h4 class="ui top attached header">Metadata</h4>
+    <div class="ui bottom attached segment" id="upload-metadata">
+        <button type="button" class="ui button" id="upload-metadata-add">Add</button>
+    </div>
+    <div class="field">
+        <label for="upload-file" class="ui button">Choose file</label>
+        <input type="file" id="upload-file" style="display: none;" />
+    </div>
+    <button type="submit" class="ui submit primary button">Upload</button>
+</div>
+
+<div class="ui form segment" id="create-category-form">
+    <div class="ui dividing header">Create category</div>
+    <div class="two fields">
+        <div class="field">
+            <label for="create-category-name">Name</label>
+            <input type="text" id="create-category-name" placeholder="Name" />
+        </div>
+        <div class="field">
+            <label for="create-category-parent">Parent</label>
+            <select id="create-category-parent" data-name="categories"></select>
+        </div>
+    </div>
+    <div class="field">
+        <textarea id="create-category-description"></textarea>
+    </div>
+    <button type="submit" class="ui submit primary button">Create</button>
+</div>

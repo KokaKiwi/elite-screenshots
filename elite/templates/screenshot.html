@@ -1,0 +1,44 @@
+<%inherit file="base.html" />
+<%namespace name="utils" file="utils.html" />
+
+${utils.breadcrumb(resource)}
+
+<h1>${resource.name}</h1>
+
+% if resource.description:
+<p class="ui segment">${resource.description | utils.br}</p>
+% endif
+
+<a href="${resource.image().url}" class="ui centered image">
+    <img
+        src="${resource.image(size=resource.SHOW_SIZE).url}"
+        width="${resource.image(size=resource.SHOW_SIZE).width}"
+        height="${resource.image(size=resource.SHOW_SIZE).height}"
+        alt="${resource.name}" />
+</a>
+
+<%def name="image_button(title, size=None, class_=None)">
+    <a class="ui button ${class_}" href="${resource.image(size=size).url}">${title}</a>
+</%def>
+
+<div class="ui buttons">
+    ${image_button('Original', class_='primary')}
+    ${image_button('1920x1080', (1920, 1080))}
+    ${image_button('1024x768', (1024, 768))}
+    ${image_button('800x600', (800, 600))}
+</div>
+
+<table class="ui padded table">
+    <tbody>
+        <tr>
+            <td>Date</td>
+            <td>${resource.date}</td>
+        </tr>
+        % for (name, value) in resource.metadata.items():
+        <tr>
+            <td>${name}</td>
+            <td>${value}</td>
+        </tr>
+        % endfor
+    </tbody>
+</table>

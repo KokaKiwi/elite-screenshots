@@ -1,0 +1,61 @@
+<%inherit file="base.html" />
+<%namespace name="utils" file="utils.html" />
+
+% if resource != root:
+${utils.breadcrumb(resource)}
+% endif
+
+% if resource != root:
+<h1>${resource.name}</h1>
+% endif
+
+% if resource.description:
+<p>${resource.description}</p>
+% endif
+
+<div class="ui four cards">
+    % for subcategory in resource.subcategories:
+    <a href="${subcategory.url}" class="ui card">
+        <div class="content">
+            <div class="header">
+                ${subcategory.name}
+            </div>
+            % if subcategory.description:
+            <div class="description">
+                ${subcategory.description | utils.br}
+            </div>
+            % endif
+        </div>
+    </a>
+    % endfor
+</div>
+
+<div class="ui four cards">
+    % for screenshot in resource.screenshots:
+    <a href="${screenshot.url}" class="ui card">
+        <div class="image">
+            <%
+                screenshot.thumbnail.ensure_image()
+            %>
+            <img
+                src="${screenshot.thumbnail.url}"
+                width="${screenshot.thumbnail.width}"
+                height="${screenshot.thumbnail.height}"
+                alt="${screenshot.name}" />
+        </div>
+        <div class="content">
+            <div class="header">
+                ${screenshot.name}
+            </div>
+            <div class="meta">
+                ${screenshot.date.humanize()}
+            </div>
+            % if screenshot.description:
+            <div class="description">
+                ${screenshot.description | utils.br}
+            </div>
+            % endif
+        </div>
+    </a>
+    % endfor
+</div>

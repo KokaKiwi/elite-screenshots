@@ -1,0 +1,12 @@
+
+body {
+    background: #1b1c1d;
+}
+
+div#main {
+    margin-bottom: 0;
+}
+
+div.ui.buttons {
+    margin-top: 10px;
+}

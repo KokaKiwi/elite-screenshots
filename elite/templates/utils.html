@@ -1,0 +1,18 @@
+
+<%def name="breadcrumb(resource)">
+    <div class="ui large breadcrumb">
+        <a href="${root.url}">Home</a>
+        % for item in resource.parent.breadcrumb[1:]:
+        ## <i class="right chevron icon divider"></i>
+        >
+        <a href="${item.url}">${item.name}</a>
+        % endfor
+    </div>
+</%def>
+
+<%def name="br(text)">
+    <%
+        import markupsafe
+        return text.replace('\n', markupsafe.Markup('<br />'))
+    %>
+</%def>
