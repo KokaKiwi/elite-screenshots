@@ -173,7 +173,7 @@ class Category(Entity):
 class Screenshot(Entity):
     DATE_FORMAT = 'YYYY-MM-DD'
 
-    THUMBNAIL_SIZE = (300, 186)
+    THUMBNAIL_SIZE = (300, 169)
     SHOW_SIZE = (1920, 1080)
     SIZES = [
         (1920, 1080),
@@ -342,4 +342,5 @@ class Image(object):
     def ensure_image(self):
         if not self.path.exists():
             img = self.original.image
-            img.resize(self.size).save(str(self.path))
+            img.thumbnail(self.size)
+            img.save(str(self.path))
