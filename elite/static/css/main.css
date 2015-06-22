@@ -10,3 +10,8 @@ div#main {
 div.ui.buttons {
     margin-top: 10px;
 }
+
+footer {
+    text-align: center;
+    margin-top: 5px;
+}
