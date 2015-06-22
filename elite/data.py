@@ -129,7 +129,8 @@ class Category(Entity):
 
     @property
     def screenshots(self):
-        _filter = lambda child: isinstance(child, Screenshot) and child.image().exists()
+        _filter = lambda child: isinstance(
+            child, Screenshot) and child.image().exists()
         return filter(_filter, self.children)
 
     @property

@@ -32,6 +32,7 @@ def templated(name=None):
         return wrapped
     return wrapper
 
+
 def authenticated(f):
     @wraps(f)
     def wrapped(*args, **kwargs):
