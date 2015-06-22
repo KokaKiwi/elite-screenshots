@@ -32,7 +32,8 @@ ${utils.breadcrumb(resource)}
     <tbody>
         <tr>
             <td>Date</td>
-            <td>${resource.date}</td>
+            ## TODO: Need better formatting...
+            <td>${resource.date.format('YYYY-MM-DD HH:mm')}</td>
         </tr>
         % for (name, value) in resource.metadata.items():
         <tr>
