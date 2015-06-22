@@ -41,6 +41,11 @@ def resource(path=None):
 @app.route('/<path:path>.png')
 def resource_image(path):
     from . import settings
+    from .data import Screenshot
+
+    screenshot = Screenshot.load(path)
+    if screenshot:
+        path = '%s/original' % (path)
 
     return send_from_directory(str(settings.DATA_PATH), path + '.png')
 

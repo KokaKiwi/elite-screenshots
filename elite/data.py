@@ -316,12 +316,11 @@ class Image(object):
             return self.placeholder
 
         if self.size is None:
-            filename = 'original.png'
+            return '%s.png' % (self.screenshot.url)
         else:
             filename = '%dx%d.png' % (self.width, self.height)
-
-        self.ensure_image()
-        return '%s/%s' % (self.screenshot.url, filename)
+            self.ensure_image()
+            return '%s/%s' % (self.screenshot.url, filename)
 
     @property
     def width(self):
