@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from PIL import Image
-from .utils import render_json
+from .utils import render_json, authenticated
 
 api = Blueprint('api', __name__)
 
@@ -33,6 +33,7 @@ def categories():
 
 @api.route('/categories/create', methods=['POST'])
 @render_json
+@authenticated
 def categories_create():
     from .data import Entity, Category
 
@@ -54,6 +55,7 @@ def categories_create():
 
 @api.route('/screenshot/create', methods=['POST'])
 @render_json
+@authenticated
 def screenshot_create():
     from .data import Entity, Category, Screenshot
 
@@ -77,6 +79,7 @@ def screenshot_create():
 
 @api.route('/screenshot/upload', methods=['POST'])
 @render_json
+@authenticated
 def screenshot_upload():
     from .data import Screenshot
 

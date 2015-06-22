@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, abort, send_from_directory
-from .utils import templated
+from .utils import templated, authenticated
 
 app = Flask(__name__)
 app.config.from_object('elite.settings')
@@ -47,5 +47,6 @@ def resource_image(path):
 
 @app.route('/panel')
 @templated('panel.html')
+@authenticated
 def panel():
     pass

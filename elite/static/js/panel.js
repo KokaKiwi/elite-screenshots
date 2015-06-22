@@ -77,7 +77,7 @@ var panel = {
 
         createCategory: function(data, cb) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/categories/create', true);
+            xhr.open('POST', '/api/categories/create?key=' + panel.api.key, true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
             xhr.onload = function(e) {
                 var res = JSON.parse(xhr.responseText);
@@ -88,7 +88,7 @@ var panel = {
 
         createScreenshot: function(data, cb) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/screenshot/create', true);
+            xhr.open('POST', '/api/screenshot/create?key=' + panel.api.key, true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
             xhr.onload = function(e) {
                 var res = JSON.parse(xhr.responseText);
@@ -103,7 +103,7 @@ var panel = {
             data.append('file', file);
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/screenshot/upload', true);
+            xhr.open('POST', '/api/screenshot/upload?key=' + panel.api.key, true);
             xhr.onload = function(e) {
                 var res = JSON.parse(xhr.responseText);
                 cb(res);

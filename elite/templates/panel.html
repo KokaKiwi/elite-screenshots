@@ -6,8 +6,15 @@
 <a href="/">Home</a>
 
 <%block name="head">
+    <%
+        from elite.settings import API_KEY
+    %>
     <script src="${url_for('static', filename='js/lodash.min.js')}"></script>
     <script src="${url_for('static', filename='js/panel.js')}"></script>
+
+    <script>
+        panel.api.key = "${API_KEY}";
+    </script>
 </%block>
 
 <div class="ui form segment" id="upload-form">
