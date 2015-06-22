@@ -281,7 +281,7 @@ class Root(Category):
 
 
 class Image(object):
-    DEBUG = True
+    DEBUG = False
 
     def __init__(self, screenshot, size=None):
         self.screenshot = screenshot
