@@ -8,12 +8,12 @@ var panel = {
         panel.upload.category = panel.upload.form.querySelector('select#upload-category');
         panel.upload.description = panel.upload.form.querySelector('textarea#upload-description');
         panel.upload.file = panel.upload.form.querySelector('input#upload-file');
+        panel.upload.progress = panel.upload.form.querySelector('div.progress');
+        panel.upload.bar = panel.upload.progress.querySelector('div.bar');
 
         panel.upload.metadata = {};
         panel.upload.metadata.element = panel.upload.form.querySelector('div#upload-metadata');
         panel.upload.metadata.add = panel.upload.metadata.element.querySelector('button#upload-metadata-add');
-
-        panel.upload.progress = panel.upload.form.querySelector('div#upload-progress');
 
         panel.upload.submit = panel.upload.form.querySelector('button[type="submit"]');
 
@@ -68,9 +68,9 @@ var panel = {
         getCategories: function(cb) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/api/categories', true);
+            xhr.responseType = 'json';
             xhr.onload = function(e) {
-                var data = JSON.parse(xhr.responseText);
-                cb(data.categories);
+                cb(xhr.response);
             };
             xhr.send();
         },
@@ -79,9 +79,9 @@ var panel = {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/api/categories/create?key=' + panel.api.key, true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.responseType = 'json';
             xhr.onload = function(e) {
-                var res = JSON.parse(xhr.responseText);
-                cb(res);
+                cb(xhr.response);
             };
             xhr.send(JSON.stringify(data));
         },
@@ -90,24 +90,26 @@ var panel = {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/api/screenshot/create?key=' + panel.api.key, true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.responseType = 'json';
             xhr.onload = function(e) {
-                var res = JSON.parse(xhr.responseText);
-                cb(res);
+                cb(xhr.response);
             };
             xhr.send(JSON.stringify(data));
         },
 
-        uploadScreenshot: function(path, file, cb) {
+        uploadScreenshot: function(path, file, cb, upload) {
             var data = new FormData();
             data.append('path', path);
             data.append('file', file);
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/api/screenshot/upload?key=' + panel.api.key, true);
+            xhr.responseType = 'json';
             xhr.onload = function(e) {
-                var res = JSON.parse(xhr.responseText);
-                cb(res);
+                cb(xhr.response);
             };
+            xhr.upload.addEventListener('progress', upload.progress);
+            xhr.upload.addEventListener('load', upload.done);
             xhr.send(data);
         },
     },
@@ -153,15 +155,25 @@ var panel = {
                     return;
                 }
 
+                panel.upload.progress.style.display = '';
                 panel.api.uploadScreenshot(res.path, panel.upload.file.files[0], function(res) {
                     if (res.status != 'ok') {
                         console.log('Error:', res.message);
-                        panel.upload.toggleLoading();
                         return;
                     }
 
                     console.log(res);
-                    panel.upload.toggleLoading();
+                }, {
+                    progress: function(e) {
+                        if (e.lengthComputable) {
+                            var percent = e.loaded / e.total;
+                            panel.upload.bar.style.width = percent + '%';
+                        }
+                    },
+                    done: function() {
+                        panel.upload.progress.style.display = 'none';
+                        panel.upload.toggleLoading();
+                    },
                 });
             });
         },
