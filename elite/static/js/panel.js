@@ -70,7 +70,7 @@ var panel = {
             xhr.open('GET', '/api/categories', true);
             xhr.responseType = 'json';
             xhr.onload = function(e) {
-                cb(xhr.response);
+                cb(xhr.response.categories);
             };
             xhr.send();
         },
