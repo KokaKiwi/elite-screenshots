@@ -167,7 +167,7 @@ var panel = {
                     progress: function(e) {
                         if (e.lengthComputable) {
                             var percent = e.loaded / e.total;
-                            panel.upload.bar.style.width = percent + '%';
+                            panel.upload.bar.style.width = (percent*100) + '%';
                         }
                     },
                     done: function() {
